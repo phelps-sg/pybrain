@@ -1,7 +1,7 @@
 __author__ = 'Thomas Rueckstiess, ruecksti@in.tum.de'
 
 from pybrain.rl.agents.agent import Agent
-from pybrain.datasets import ReinforcementDataSet
+from pybrain.datasets import ReinforcementDataFrameDataSet
 
 
 class LoggingAgent(Agent):
@@ -28,7 +28,8 @@ class LoggingAgent(Agent):
         self.outdim = outdim
 
         # create the history dataset
-        self.history = ReinforcementDataSet(indim, outdim)
+        #self.history = ReinforcementDataSet(indim, outdim)
+        self.history = ReinforcementDataFrameDataSet(indim, outdim)
 
 
     def integrateObservation(self, obs):
@@ -59,7 +60,8 @@ class LoggingAgent(Agent):
 
         # store state, action and reward in dataset if logging is enabled
         if self.logging:
-            self.history.addSample(self.lastobs, self.lastaction, self.lastreward)
+            # self.history.addSample(self.lastobs, self.lastaction, self.lastreward)
+            self.history.addSample(self)
 
 
     def newEpisode(self):
