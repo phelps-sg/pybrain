@@ -3,6 +3,36 @@ __author__ = 'Thomas Rueckstiess, ruecksti@in.tum.de'
 from pybrain.datasets.sequential import SequentialDataSet
 from pybrain.datasets.dataset import DataSet
 from scipy import zeros
+import pandas as pd
+
+class ReinforcementDataFrameDataSet(object):
+
+    def __init__(self, statedim, actiondim):
+        self.actiondim = actiondim
+        self.statedim = statedim
+        self.clear()
+
+    def addSample(self, agent):
+        self.lastSample = [agent.lastobs[0], agent.lastaction[0], agent.lastreward]
+        self.df.loc[self.t] = self.lastSample + list(agent.module.getActionValues(0)[:])
+        self.advance_time()
+
+    def getSample(self):
+        return self.lastSample
+
+    def advance_time(self):
+        self.t = self.t + 1
+
+    def clear(self):
+        cols = ['state', 'action', 'reward']
+        for s in range(self.actiondim + 1):
+            cols.append('Q' + str(s))
+        self.df = pd.DataFrame(columns=cols)
+        self.t = 0
+
+    def newEpisode(self):
+        pass
+        #TODO
 
 
 class ReinforcementDataSet(SequentialDataSet):
@@ -31,13 +61,14 @@ class ReinforcementDataSet(SequentialDataSet):
         self.indim = self.statedim
         self.outdim = self.actiondim
 
-    def addSample(self, state, action, reward):
+    # def addSample(self, state, action, reward):
+    def addSample(self, agent):
         """ adds a new sample consisting of state, action, reward.
 
             :key state: the current state of the world
             :key action: the executed action by the agent
             :key reward: the reward received for action in state """
-        self.appendLinked(state, action, reward)
+        self.appendLinked(agent.lastobs, agent.lastaction, agent.lastreward)
 
     def getSumOverSequences(self, field):
         sums = zeros((self.getNumSequences(), self.getDimension(field)))
