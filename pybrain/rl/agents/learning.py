@@ -14,9 +14,10 @@ class LearningAgent(LoggingAgent):
         :key module: the acting module
         :key learner: the learner (optional) """
 
-        LoggingAgent.__init__(self, module.indim, module.outdim)
+        # LoggingAgent.__init__(self, module.indim, module.outdim)
+        LoggingAgent.__init__(self, module)
 
-        self.module = module
+        # self.module = module
         self.learner = learner
 
         # if learner is available, tell it the module and data

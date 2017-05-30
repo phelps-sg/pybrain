@@ -20,16 +20,18 @@ class LoggingAgent(Agent):
     lastreward = None
 
 
-    def __init__(self, indim, outdim, **kwargs):
+    def __init__(self, module, **kwargs):
+    # def __init__(self, indim, outdim, **kwargs):
         self.setArgs(**kwargs)
         
         # store input and output dimension
-        self.indim = indim
-        self.outdim = outdim
+        # self.indim = indim
+        # self.outdim = outdim
+        self.module = module
 
         # create the history dataset
         #self.history = ReinforcementDataSet(indim, outdim)
-        self.history = ReinforcementDataFrameDataSet(indim, outdim)
+        self.history = ReinforcementDataFrameDataSet(module.numRows, module.numActions)
 
 
     def integrateObservation(self, obs):

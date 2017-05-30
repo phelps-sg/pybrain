@@ -1,4 +1,4 @@
-__author__ = 'Thomas Rueckstiess, ruecksti@in.tum.de'
+__author__ = 'Steve Phelps, sphelps@sphelps.net'
 
 from pybrain.datasets.sequential import SequentialDataSet
 from pybrain.datasets.dataset import DataSet
@@ -7,9 +7,9 @@ import pandas as pd
 
 class ReinforcementDataFrameDataSet(object):
 
-    def __init__(self, statedim, actiondim):
-        self.actiondim = actiondim
-        self.statedim = statedim
+    def __init__(self, numStates, numActions):
+        self.numStates = numStates
+        self.numActions = numActions
         self.clear()
 
     def addSample(self, agent):
@@ -25,7 +25,7 @@ class ReinforcementDataFrameDataSet(object):
 
     def clear(self):
         cols = ['state', 'action', 'reward']
-        for s in range(self.actiondim + 1):
+        for s in range(self.numActions):
             cols.append('Q' + str(s))
         self.df = pd.DataFrame(columns=cols)
         self.t = 0
