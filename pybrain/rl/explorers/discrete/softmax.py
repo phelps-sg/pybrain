@@ -20,4 +20,4 @@ class SoftmaxExplorer(DiscreteExplorer):
     def _forwardImplementation(self, inbuf, outbuf):
         propensities = self.module.getActionValues(self.state)
         probabilities = self.probability_fn(propensities)
-        return np.random.choice(len(probabilities), 1, p=probabilities)
+        outbuf[:] = np.random.choice(len(probabilities), 1, p=probabilities)
