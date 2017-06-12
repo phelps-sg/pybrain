@@ -4,5 +4,6 @@ from pybrain.datasets.supervised import SupervisedDataSet
 from pybrain.datasets.unsupervised import UnsupervisedDataSet
 from pybrain.datasets.importance import ImportanceDataSet
 from pybrain.datasets.reinforcement import ReinforcementDataSet
+from pybrain.datasets.reinforcement import ReinforcementListDataSet
 from pybrain.datasets.reinforcement import ReinforcementDataFrameDataSet
 from pybrain.datasets.classification import ClassificationDataSet, SequenceClassificationDataSet

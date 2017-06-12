@@ -3,7 +3,42 @@ __author__ = 'Steve Phelps, sphelps@sphelps.net'
 from pybrain.datasets.sequential import SequentialDataSet
 from pybrain.datasets.dataset import DataSet
 from scipy import zeros
+
 import pandas as pd
+
+class ReinforcementListDataSet(object):
+
+    def __init__(self, numStates, numActions):
+        self.numStates = numStates
+        self.numActions = numActions
+        self.clear()
+
+    def addSample(self, agent):
+        self.lastSample = [agent.lastobs[0], agent.lastaction[0], agent.lastreward]
+        self.dataset.append(self.lastSample + list(agent.module.getActionValues(0)[:]))
+        self.advance_time()
+
+    def getSample(self):
+        return self.lastSample
+
+    def advance_time(self):
+        self.t = self.t + 1
+
+    def clear(self):
+        self.cols = ['state', 'action', 'reward']
+        for s in range(self.numActions):
+            self.cols.append('Q' + str(s))
+        self.dataset = []
+        self.t = 0
+
+    def df(self):
+        return pd.DataFrame(self.dataset, columns=self.cols)
+
+
+    def newEpisode(self):
+        pass
+        #TODO
+
 
 class ReinforcementDataFrameDataSet(object):
 
