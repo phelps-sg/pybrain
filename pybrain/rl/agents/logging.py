@@ -1,7 +1,7 @@
 __author__ = 'Thomas Rueckstiess, ruecksti@in.tum.de'
 
 from pybrain.rl.agents.agent import Agent
-from pybrain.datasets import ReinforcementDataFrameDataSet
+from pybrain.datasets import ReinforcementListDataSet
 
 
 class LoggingAgent(Agent):
@@ -31,7 +31,7 @@ class LoggingAgent(Agent):
 
         # create the history dataset
         #self.history = ReinforcementDataSet(indim, outdim)
-        self.history = ReinforcementDataFrameDataSet(module.numRows, module.numActions)
+        self.history = ReinforcementListDataSet(module.numRows, module.numActions)
 
 
     def integrateObservation(self, obs):
